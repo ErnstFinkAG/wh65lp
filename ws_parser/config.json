@@ -21,6 +21,7 @@
     "MQTT_PORT": "int",
     "MQTT_USER": "str",
     "MQTT_PASS": "str",
-    "MQTT_TOPIC_PREFIX": "str"
+    "MQTT_TOPIC_PREFIX": "str",
+    "DEBUG": "str"
   }
 }
