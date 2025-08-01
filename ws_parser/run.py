@@ -7,27 +7,32 @@ HOST = "10.80.24.101"
 PORT = 502
 PACKET_SIZE = 25
 
+def getenv_int(varname, default):
+    value = os.getenv(varname, str(default))
+    try:
+        return int(value)
+    except ValueError:
+        print(f"[WARN] Invalid int for {varname}: '{value}', using default: {default}")
+        return default
+
 MQTT_HOST = os.getenv("MQTT_HOST", "localhost")
-MQTT_PORT = int(os.getenv("MQTT_PORT", 1883))
+MQTT_PORT = getenv_int("MQTT_PORT", 1883)
 MQTT_USER = os.getenv("MQTT_USER", "")
 MQTT_PASS = os.getenv("MQTT_PASS", "")
 MQTT_PREFIX = os.getenv("MQTT_TOPIC_PREFIX", "weatherstation")
 
-mqtt_client = mqtt.Client()
-mqtt_client.username_pw_set(MQTT_USER, MQTT_PASS)
+print(f"[DEBUG] Connecting to MQTT at {MQTT_HOST}:{MQTT_PORT} with user '{MQTT_USER}'")
 
-print(f"[DEBUG] MQTT_HOST={MQTT_HOST}, USER={MQTT_USER}")
+mqtt_client = mqtt.Client(protocol=mqtt.MQTTv311)
 
-print(f"[DEBUG] Trying to connect to MQTT at {MQTT_HOST}:{MQTT_PORT} with user '{MQTT_USER}'")
+if MQTT_USER:
+    mqtt_client.username_pw_set(MQTT_USER, MQTT_PASS)
 
 try:
     mqtt_client.connect(MQTT_HOST, MQTT_PORT, 60)
     mqtt_client.loop_start()
-    print("[DEBUG] MQTT connection successful")
 except Exception as e:
     print(f"[MQTT ERROR] Could not connect to MQTT → {e}")
-    import sys; sys.exit(1)
-
 
 def publish(topic, value):
     mqtt_client.publish(f"{MQTT_PREFIX}/{topic}", value, retain=True)
@@ -46,19 +51,23 @@ def decode_packet(data):
     tmp_h = data[3] & 0x0F
     debug["WSP_FLAG"] = (dir_h >> 2) & 0x01
     debug["low_battery"] = bool((tmp_h >> 3) & 0x01)
+
     tmp_10 = (tmp_h >> 2) & 0x01
     tmp_9 = (tmp_h >> 1) & 0x01
     tmp_8 = tmp_h & 0x01
 
     tmp_m = (data[4] >> 4) & 0x0F
     tmp_l = data[4] & 0x0F
+
     tmp_7 = (tmp_m >> 3) & 0x01
     tmp_6 = (tmp_m >> 2) & 0x01
     tmp_5 = (tmp_m >> 1) & 0x01
+
     tmp_3 = (tmp_l >> 3) & 0x01
     tmp_2 = (tmp_l >> 2) & 0x01
     tmp_1 = (tmp_l >> 1) & 0x01
     tmp_0 = tmp_l & 0x01
+
     tmp_raw = (
         (tmp_10 << 10) | (tmp_9 << 9) | (tmp_8 << 8) |
         (tmp_7 << 7) | (tmp_6 << 6) | (tmp_5 << 5) |
@@ -109,12 +118,12 @@ def decode_and_publish(packet):
         publish("pressure", sun.get("pressure_hpa"))
         publish("rainfall", rain.get("rainfall_mm"))
         publish("battery_low", int(debug.get("low_battery", False)))
-        print("✅ Published to MQTT")
+        print("✅ Published weather data")
     except Exception as e:
-        print(f"[ERROR] {e}")
+        print(f"[ERROR] Packet decode failed: {e}")
 
 def main():
-    print(f"[INFO] Connecting to {HOST}:{PORT}")
+    print(f"[INFO] Connecting to weather station at {HOST}:{PORT}")
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((HOST, PORT))
@@ -124,7 +133,7 @@ def main():
                     decode_and_publish(data)
                 time.sleep(1)
     except Exception as e:
-        print(f"[FATAL] {e}")
+        print(f"[FATAL] Could not connect to device: {e}")
 
 if __name__ == "__main__":
     main()
