@@ -17,6 +17,14 @@ def getenv_int(varname, default):
         print(f"[WARN] Invalid int for {varname}: '{value}', using default: {default}")
         return default
 
+print("[DEBUG] Reading environment variables:")
+print(f"MQTT_HOST: {os.getenv('MQTT_HOST')}")
+print(f"MQTT_PORT: {os.getenv('MQTT_PORT')}")
+print(f"MQTT_USER: {os.getenv('MQTT_USER')}")
+print(f"MQTT_PASS: {os.getenv('MQTT_PASS')}")
+print(f"MQTT_TOPIC_PREFIX: {os.getenv('MQTT_TOPIC_PREFIX')}")
+
+
 MQTT_HOST = os.getenv("MQTT_HOST", "localhost")
 MQTT_PORT = getenv_int("MQTT_PORT", 1883)
 MQTT_USER = os.getenv("MQTT_USER", "")
