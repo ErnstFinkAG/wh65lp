@@ -1,6 +1,6 @@
 {
   "name": "WS Parser",
-  "version": "2.1",
+  "version": "2.2",
   "slug": "ws_parser",
   "description": "Parses weather station data and publishes to MQTT.",
   "arch": ["amd64", "armv7", "aarch64"],
