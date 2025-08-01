@@ -6,7 +6,7 @@ COPY run.py .
 
 RUN pip install paho-mqtt
 
-# 👇 These enable HA config values to become environment variables in container
+# These enable HA config values to become environment variables in container
 ENV MQTT_HOST=$MQTT_HOST
 ENV MQTT_PORT=$MQTT_PORT
 ENV MQTT_USER=$MQTT_USER
