@@ -7,7 +7,7 @@ HOST = "10.80.24.101"
 PORT = 502
 PACKET_SIZE = 25
 
-MQTT_HOST = os.getenv("MQTT_HOST", "core-mosquitto")
+MQTT_HOST = os.getenv("MQTT_HOST", "localhost")
 MQTT_PORT = int(os.getenv("MQTT_PORT", 1883))
 MQTT_USER = os.getenv("MQTT_USER", "")
 MQTT_PASS = os.getenv("MQTT_PASS", "")
@@ -15,6 +15,8 @@ MQTT_PREFIX = os.getenv("MQTT_TOPIC_PREFIX", "weatherstation")
 
 mqtt_client = mqtt.Client()
 mqtt_client.username_pw_set(MQTT_USER, MQTT_PASS)
+
+print(f"[DEBUG] MQTT_HOST={MQTT_HOST}, USER={MQTT_USER}")
 
 print(f"[DEBUG] Trying to connect to MQTT at {MQTT_HOST}:{MQTT_PORT} with user '{MQTT_USER}'")
 
