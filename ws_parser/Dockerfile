@@ -1,7 +1,5 @@
 FROM python:3.11-slim
 
-WORKDIR /app
-
 COPY run.py .
 
 RUN pip install paho-mqtt
@@ -13,4 +11,4 @@ ENV MQTT_USER=$MQTT_USER
 ENV MQTT_PASS=$MQTT_PASS
 ENV MQTT_TOPIC_PREFIX=$MQTT_TOPIC_PREFIX
 
-CMD ["python", "/app/run.py"]
+CMD ["python", "run.py"]
