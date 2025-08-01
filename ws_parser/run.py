@@ -7,7 +7,7 @@ HOST = "10.80.24.101"
 PORT = 502
 PACKET_SIZE = 25
 
-MQTT_HOST = os.getenv("MQTT_HOST", "mqtt")
+MQTT_HOST = os.getenv("MQTT_HOST", "core-mosquitto")
 MQTT_PORT = int(os.getenv("MQTT_PORT", 1883))
 MQTT_USER = os.getenv("MQTT_USER", "")
 MQTT_PASS = os.getenv("MQTT_PASS", "")
