@@ -15,8 +15,17 @@ MQTT_PREFIX = os.getenv("MQTT_TOPIC_PREFIX", "weatherstation")
 
 mqtt_client = mqtt.Client()
 mqtt_client.username_pw_set(MQTT_USER, MQTT_PASS)
-mqtt_client.connect(MQTT_HOST, MQTT_PORT, 60)
-mqtt_client.loop_start()
+
+print(f"[DEBUG] Trying to connect to MQTT at {MQTT_HOST}:{MQTT_PORT} with user '{MQTT_USER}'")
+
+try:
+    mqtt_client.connect(MQTT_HOST, MQTT_PORT, 60)
+    mqtt_client.loop_start()
+    print("[DEBUG] MQTT connection successful")
+except Exception as e:
+    print(f"[MQTT ERROR] Could not connect to MQTT → {e}")
+    import sys; sys.exit(1)
+
 
 def publish(topic, value):
     mqtt_client.publish(f"{MQTT_PREFIX}/{topic}", value, retain=True)
