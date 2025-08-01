@@ -1,20 +1,20 @@
 {
   "name": "WS Parser",
-  "version": "1.7",
+  "version": "1.8",
   "slug": "ws_parser",
   "description": "Parses weather station data and publishes to MQTT.",
   "arch": ["amd64", "armv7", "aarch64"],
   "startup": "application",
   "boot": "auto",
   "homeassistant": "2023.0.0",
+
   "options": {
+    "DEBUG": "true",
     "MQTT_HOST": "10.80.1.11",
     "MQTT_PORT": 1883,
     "MQTT_USER": "mqtt_user",
     "MQTT_PASS": "mqtt_password",
     "MQTT_TOPIC_PREFIX": "weatherstation"
-    "DEBUG": "true"
-
   },
   "schema": {
     "MQTT_HOST": "str",
