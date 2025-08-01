@@ -13,6 +13,8 @@
     "MQTT_USER": "mqtt_user",
     "MQTT_PASS": "mqtt_password",
     "MQTT_TOPIC_PREFIX": "weatherstation"
+    "DEBUG": "true"
+
   },
   "schema": {
     "MQTT_HOST": "str",
