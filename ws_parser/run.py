@@ -2,6 +2,8 @@ import os
 import socket
 import time
 import paho.mqtt.client as mqtt
+import warnings
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 # Weather station connection
 HOST = "10.80.24.101"
