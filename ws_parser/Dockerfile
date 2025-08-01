@@ -13,4 +13,4 @@ ENV MQTT_USER=$MQTT_USER
 ENV MQTT_PASS=$MQTT_PASS
 ENV MQTT_TOPIC_PREFIX=$MQTT_TOPIC_PREFIX
 
-CMD ["python", "run.py"]
+CMD ["python", "/app/run.py"]
