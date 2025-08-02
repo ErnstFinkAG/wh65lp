@@ -2,6 +2,9 @@ import os
 import paho.mqtt.client as mqtt
 
 print(">>> WS PARSER RUNNING <<<")
+print("[DEBUG] All environment variables in container:")
+for k, v in os.environ.items():
+    print(f"{k}={v}")
 
 MQTT_HOST = os.getenv("MQTT_HOST", "localhost")
 MQTT_PORT = os.getenv("MQTT_PORT")
