@@ -4,7 +4,13 @@ import paho.mqtt.client as mqtt
 print(">>> WS PARSER RUNNING <<<")
 
 MQTT_HOST = os.getenv("MQTT_HOST", "localhost")
-MQTT_PORT = int(os.getenv("MQTT_PORT", "1883"))
+MQTT_PORT = os.getenv("MQTT_PORT")
+if not MQTT_PORT or not MQTT_PORT.isdigit():
+    print(f"[WARN] Invalid MQTT_PORT: '{MQTT_PORT}', defaulting to 1883")
+    MQTT_PORT = 1883
+else:
+    MQTT_PORT = int(MQTT_PORT)
+
 MQTT_USER = os.getenv("MQTT_USER", "")
 MQTT_PASS = os.getenv("MQTT_PASS", "")
 MQTT_TOPIC = os.getenv("MQTT_TOPIC_PREFIX", "weatherstation/test")
