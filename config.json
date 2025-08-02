@@ -1,8 +1,8 @@
 {
-  "name": "WS Parser",
-  "version": "2.7",
-  "slug": "ws_parser",
-  "description": "Parses weather station data and publishes to MQTT.",
+  "name": "WH65LP Parser over RS485",
+  "version": "2.8",
+  "slug": "wh65lp_parser",
+  "description": "Hopefully Parses weather station data and publishes to MQTT.",
   "arch": ["amd64", "armv7", "aarch64"],
   "startup": "application",
   "boot": "auto",
