@@ -2,21 +2,15 @@ import os
 import paho.mqtt.client as mqtt
 
 print(">>> WS PARSER RUNNING <<<")
-print("[DEBUG] All environment variables in container:")
-for k, v in os.environ.items():
-    print(f"{k}={v}")
+print("[DEBUG] Hardcoded config mode!")
 
-MQTT_HOST = os.getenv("MQTT_HOST", "localhost")
-MQTT_PORT = os.getenv("MQTT_PORT")
-if not MQTT_PORT or not MQTT_PORT.isdigit():
-    print(f"[WARN] Invalid MQTT_PORT: '{MQTT_PORT}', defaulting to 1883")
-    MQTT_PORT = 1883
-else:
-    MQTT_PORT = int(MQTT_PORT)
-
-MQTT_USER = os.getenv("MQTT_USER", "")
-MQTT_PASS = os.getenv("MQTT_PASS", "")
-MQTT_TOPIC = os.getenv("MQTT_TOPIC_PREFIX", "weatherstation/test")
+# ----- HARDCODE YOUR SETTINGS HERE -----
+MQTT_HOST = "10.80.1.11"
+MQTT_PORT = 1883
+MQTT_USER = "mqtt_user"         # Use "" if no user
+MQTT_PASS = "mqtt_password"     # Use "" if no pass
+MQTT_TOPIC = "weatherstation/test"
+# ---------------------------------------
 
 print(f"Connecting to MQTT at {MQTT_HOST}:{MQTT_PORT} as user '{MQTT_USER}'")
 
@@ -28,7 +22,7 @@ try:
     mqtt_client.connect(MQTT_HOST, MQTT_PORT, 60)
     mqtt_client.loop_start()
     print("Connected, publishing test message...")
-    mqtt_client.publish(f"{MQTT_TOPIC}", "hello world", retain=True)
+    mqtt_client.publish(MQTT_TOPIC, "hello world (hardcoded)", retain=True)
     print("Published! Check your MQTT broker for the test message.")
 except Exception as e:
     print(f"[ERROR] Could not connect/publish to MQTT: {e}")
