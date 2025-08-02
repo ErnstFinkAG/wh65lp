@@ -1,6 +1,6 @@
 {
   "name": "WS Parser",
-  "version": "2.6",
+  "version": "2.7",
   "slug": "ws_parser",
   "description": "Parses weather station data and publishes to MQTT.",
   "arch": ["amd64", "armv7", "aarch64"],
@@ -13,7 +13,8 @@
     "MQTT_USER": "mqtt_user",
     "MQTT_PASS": "mqtt_password",
     "MQTT_TOPIC_PREFIX": "weatherstation",
-    "DEBUG": "true"
+    "DEBUG": "true",
+    "TEST": "hello world"
   },
   "schema": {
     "MQTT_HOST": "str",
@@ -21,6 +22,7 @@
     "MQTT_USER": "str",
     "MQTT_PASS": "str",
     "MQTT_TOPIC_PREFIX": "str",
-    "DEBUG": "str"
+    "DEBUG": "str",
+    "TEST": "str"
   }
 }
